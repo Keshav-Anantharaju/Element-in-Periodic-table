@@ -1,0 +1,63 @@
+#This file will make all the changes
+#!/bin/bash
+PSQL="psql --username=freecodecamp --dbname=periodic_table -t --no-align -c"
+if [[ $1 ]]
+then
+  if [[ $1 =~ ^[0-9]*$ ]]
+  then
+    SEARCHRESULT="$($PSQL "select p.atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius from properties p inner join elements using(atomic_number) inner join types using (type_id) where atomic_number=$1")"
+    if [[ -z $SEARCHRESULT ]]
+    then
+      echo "I could not find that element in the database."
+    else
+      echo "$SEARCHRESULT" | while IFS="|" read ATNO ATNA ATS TYP AMU MP BP
+      do
+        echo "The element with atomic number $ATNO is $ATNA ($ATS). It's a $TYP, with a mass of $AMU amu. $ATNA has a melting point of $MP celsius and a boiling point of $BP celsius."
+      done
+    fi
+  else
+    SEARCHRESULT="$($PSQL "select atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius from properties p inner join elements using(atomic_number) inner join types using (type_id) where name='$1' or symbol='$1'")"
+    if [[ -z $SEARCHRESULT ]]
+    then
+      echo "I could not find that element in the database."
+    else
+      echo "$SEARCHRESULT" | while IFS="|" read ATNO ATNA ATS TYP AMU MP BP
+      do
+        echo "The element with atomic number $ATNO is $ATNA ($ATS). It's a $TYP, with a mass of $AMU amu. $ATNA has a melting point of $MP celsius and a boiling point of $BP celsius."
+      done
+    fi
+  fi
+else
+  echo "Please provide an element as an argument."
+fi#This file will make all the changes
+#!/bin/bash
+PSQL="psql --username=freecodecamp --dbname=periodic_table -t --no-align -c"
+if [[ $1 ]]
+then
+  if [[ $1 =~ ^[0-9]*$ ]]
+  then
+    SEARCHRESULT="$($PSQL "select p.atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius from properties p inner join elements using(atomic_number) inner join types using (type_id) where atomic_number=$1")"
+    if [[ -z $SEARCHRESULT ]]
+    then
+      echo "I could not find that element in the database."
+    else
+      echo "$SEARCHRESULT" | while IFS="|" read ATNO ATNA ATS TYP AMU MP BP
+      do
+        echo "The element with atomic number $ATNO is $ATNA ($ATS). It's a $TYP, with a mass of $AMU amu. $ATNA has a melting point of $MP celsius and a boiling point of $BP celsius."
+      done
+    fi
+  else
+    SEARCHRESULT="$($PSQL "select atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius from properties p inner join elements using(atomic_number) inner join types using (type_id) where name='$1' or symbol='$1'")"
+    if [[ -z $SEARCHRESULT ]]
+    then
+      echo "I could not find that element in the database."
+    else
+      echo "$SEARCHRESULT" | while IFS="|" read ATNO ATNA ATS TYP AMU MP BP
+      do
+        echo "The element with atomic number $ATNO is $ATNA ($ATS). It's a $TYP, with a mass of $AMU amu. $ATNA has a melting point of $MP celsius and a boiling point of $BP celsius."
+      done
+    fi
+  fi
+else
+  echo "Please provide an element as an argument."
+fi
